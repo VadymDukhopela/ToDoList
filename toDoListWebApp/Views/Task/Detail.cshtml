@@ -1,0 +1,37 @@
+﻿@model IEnumerable<Mission>
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Detail";
+}
+
+
+@foreach(var item in Model){
+	<form style="margin: 20px;" asp-controller="Task" asp-action="Edit">
+		<p style="display:none;">
+			<input name="id" value="@item.TaskId"/>
+		</p>
+		<p>
+			Title: 
+			<input value="@item.Title" type="text" name="Title" />
+		</p>
+		<p>
+			CompletionDate: 
+			<input value="@item.CompletionDate" type="date" name="CompletionDate" />
+		</p>
+
+		<p>
+			<select name="Category">
+					<option value="@item.CategoryId" selected>@item.CategoryName</option>
+				@foreach (var category in ViewBag.list)
+				{
+							<option value="@category.CategoryId">@category.CategoryName</option>
+				}
+				</select>
+		</p>
+		<input type="submit" value="Edit" />
+		</form>
+
+}

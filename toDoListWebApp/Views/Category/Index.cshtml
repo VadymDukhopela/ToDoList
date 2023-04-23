@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Category>
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+	ViewData["Title"] = "Category Page";
+}
+
+
+<form style="margin: 20px;" asp-controller="Category" asp-action="AddCategory">
+	<div>
+		<p>
+			Category Name:
+			<input value="CategoryTest" type="text" name="CategoryName" />
+		</p>
+		<input type="submit" value="Add Category" />
+	</div>
+</form>
+
+
+
+<table style="text-align: center;">
+	<tr style="border-bottom: black 2px solid;">
+		<th style="width:200px;">Category name</th>
+		<th></th>
+	</tr>
+
+
+	@foreach (var item in Model)
+	{
+		@if (@item.CategoryId == 1)
+		{
+
+		}
+		else
+		{
+			<tr style="border-bottom: black 2px solid;">
+				<td>@item.CategoryName</td>
+				<td>
+					<a style="text-decoration:none" asp-action="Delete" asp-controller="Category" asp-route-id="@item.CategoryId">Delete</a>
+				</td>
+			</tr>
+		}
+	}
+
+
+</table>
+

@@ -1,0 +1,94 @@
+﻿@model IEnumerable<Mission>
+
+@{
+	ViewData["Title"] = "Home Page";
+}
+
+<div style="text-align:center;">
+
+
+
+	<form style="margin: 20px;" asp-controller="Home" asp-action="AddTask">
+
+		<div>
+			<input value="TitleTest" type="text" name="Title" />
+			<input value="CompletionDate" type="date" name="CompletionDate" />
+			<select name="Category">
+				<option value="1" selected>Choose Category</option>
+				@foreach (var item in ViewBag.list)
+				{
+					<option value="@item.CategoryId">@item.CategoryName</option>
+				}
+			</select>
+			<input type="submit" value="Add Task" />
+		</div>
+
+
+
+	</form>
+
+	<div>
+		<table style="width:100%">
+			<tr style="border-bottom: black 2px solid; padding-bottom:15px;">
+				<th></th>
+				<th>Title</th>
+				<th>Category</th>
+				<th>Start Date</th>
+				<th>CompletionDate</th>
+				<th>Status</th>
+				<th></th>
+			</tr>
+
+			@foreach (var item in Model)
+			{
+
+
+				<tr style="border-bottom: black 2px solid; padding-bottom:5px; text-align:center;">
+					@if (@item.TaskStatus == 0)
+					{
+						<td align="center">
+							<a asp-action="ChangeStatus" asp-controller="Task" asp-route-id="@item.TaskId" style=" border: solid black 1px; border-radius: 100%; width: 12px;height: 12px;display: block;background: yellow;"></a>
+						</td>
+					}
+					else
+					{
+						<td align="center">
+							<a asp-action="ChangeStatus" asp-controller="Task" asp-route-id="@item.TaskId" style="border: solid black 1px; border-radius: 100%; width: 12px;height: 12px;display: block;background: green;"></a>
+						</td>
+					}
+					<td>@item.Title</td>
+					<td>@item.CategoryName</td>
+					<td>@item.StartDate.ToShortDateString()</td>
+					<td>
+						@if (@item.CompletionDate.ToShortDateString() != "1/1/0001")
+						{
+							<p>@item.CompletionDate.ToShortDateString()</p>
+						}
+					</td>
+					<td>
+						@if (@item.TaskStatus == 0)
+						{
+							<p>В процессі</p>
+						}
+						else
+						{
+							<p>Виконано</p>
+						}
+					</td>
+					<td>
+
+						<a style="margin-right:20px; text-decoration:none" asp-action="Detail" asp-controller="Task" asp-route-id="@item.TaskId">Detail</a>
+						<a style="text-decoration:none" asp-action="Delete" asp-controller="Task" asp-route-id="@item.TaskId">Delete</a>
+					</td>
+				</tr>
+
+
+			}
+		</table>
+
+
+
+	</div>
+
+
+</div>
